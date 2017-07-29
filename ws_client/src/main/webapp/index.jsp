@@ -11,6 +11,7 @@ pageContext.setAttribute("target",target); // 使用 base 标签标记请求ws�
  	<script type="text/javascript" src="js/jquery-1.8.3.js"></script>
     <script type="text/javascript">
     	$(function(){
+    		// 2. 使用jquery 直接请求ws
     		$("#btn2").click(function(){
     			url = "http://localhost:8080/ws_service/BookService_WS";
     			url = "${target}";
@@ -25,9 +26,24 @@ pageContext.setAttribute("target",target); // 使用 base 标签标记请求ws�
 					'xml'
 				);    			
     		});
+    		
+    		$("#btn3").click(function(){
+    			url = "ws_servlet",
+    			data = {"username":"tom","password":"cat"},
+				$.post(
+					url,		
+					data,
+					function(msg){
+						var txt = $(msg);
+						alert(txt.find("return").text());
+					},
+					'xml'
+				);    			
+    		});
+    		
     	});
     
-    	
+    	// 1.直接发送原生js请求ws
     	function reqWebService(){
     		// 1.创建请求对象实例
     		req = getHttpRequest();
@@ -71,7 +87,8 @@ pageContext.setAttribute("target",target); // 使用 base 标签标记请求ws�
 </head>
   
   <body>
-  	<button id="btn1" onclick="reqWebService()">dom+js发生ajax请求ws</button><br/>
-  	<button id="btn2">jquery发生ajax请求ws</button>
+  	<button id="btn1" onclick="reqWebService()">dom+js发生原生http请求ws</button>&nbsp;&nbsp;
+  	<button id="btn2">jquery发送ajax直接请求ws</button>&nbsp;&nbsp;
+  	<button id="btn3">jquery发生ajax请求servlet,再请求ws</button>&nbsp;&nbsp;
   </body>
 </html>
